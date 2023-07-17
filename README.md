@@ -4,26 +4,27 @@ I don't know if this plugin will run on non-VR versions due to the HIGGS and Ope
 Stuff I've figured out:
 ---
 - [Call Native Papyrus functions](#call-native-papyrus-functions)
-- [Interface with HIGGSVR](interface-with-higgsvr)
+- [Interface with HIGGSVR](#interface-with-higgsvr)
 - (Todo) Animation Event Listener
 - (Todo) Read VR controller position and button inputs
 - (Todo) Hook into projectile update function
 - (Todo) Register custom Papyrus functions to set SKSE variables from an MCM
 
- # Call Native Papyrus Functions
- I tried to do this the "right" way with REL::Relocation<func_t>, but I couldn't get it to work so I fell back to the SKSE method. Including Relocation.[[h|cpp]] from SKSE works fine, with one edit:
- ```s_baseAddr = reinterpret_cast<uintptr_t>(GetModuleHandle(NULL));
- s_baseAddr = reinterpret_cast<uintptr_t>(GetModuleHandle((char*)NULL)); //resolve ambiguity```
+ ## Call Native Papyrus Functions
+ I tried to do this the "right" way with REL::Relocation<func_t>, but I couldn't get it to work so I fell back to the SKSE method. Including Relocation.[h|cpp] from SKSE works fine, with one edit:
+ ```
+ s_baseAddr = reinterpret_cast<uintptr_t>(GetModuleHandle((char*)NULL));
+```
 
  Relevant files:
  nativePapyrus.cpp, nativePapyrus.h, Relocation.cpp, Relocation.h, VRExample::GameLoad()
 
-# Interface with HIGGSVR
+## Interface with HIGGSVR
 The HIGGS header just needs some namespace qualifiers. The interface is retrieved in plugin.cpp and the onWeaponGrab() callback is registered in VRExample.cpp
 
 ---
-# Following content copied from https://github.com/SkyrimScripting/SKSE_Template_MultipleSourceAndHeaderFiles
-
+## Following content copied from: https://github.com/SkyrimScripting/SKSE_Template_MultipleSourceAndHeaderFiles
+---
 Because this uses [CommonLibSSE NG](https://github.com/CharmedBaryon/CommonLibSSE-NG), it supports Skyrim SE, AE, GOG, and VR.
 
 [CommonLibSSE NG](https://github.com/CharmedBaryon/CommonLibSSE-NG) is a fork of the popular [powerof3 fork](https://github.com/powerof3/CommonLibSSE) of the _original_ `CommonLibSSE` library created by [Ryan McKenzie](https://github.com/Ryan-rsm-McKenzie) in [2018](https://github.com/Ryan-rsm-McKenzie/CommonLibSSE/commit/224773c424bdb8e36c761810cdff0fcfefda5f4a).
