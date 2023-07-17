@@ -1,28 +1,30 @@
-> 📜 other templates available at https://github.com/SkyrimScripting/SKSE_Templates
-
 # SKSE "Hello, world!"
 
-Very simple C++ SKSE plugin for Skyrim!
+This is just a sandbox plugin for me to learn how to do things the [CommonLibSSE NG](https://github.com/CharmedBaryon/CommonLibSSE-NG) way. It's based on [this excellent template by mrowrpurr](https://github.com/SkyrimScripting/SKSE_Template_MultipleSourceAndHeaderFiles).
+I don't know if this plugin will run on non-VR versions due to the HIGGS and OpenVR dependencies.
+
+Stuff I've figured out:
+---
+- [Call Native Papyrus functions](#call-native-papyrus-functions)
+- [Interface with HIGGSVR](interface-with-higgsvr)
+- (Todo) Animation Event Listener
+- (Todo) Read VR controller position and button inputs
+- (Todo) Hook into projectile update function
+- (Todo) Register custom Papyrus functions to set SKSE variables from an MCM
+
+ # Call Native Papyrus Functions
+ I tried to do this the "right" way with REL::Relocation<func_t>, but I couldn't get it to work so I fell back to the SKSE method. Including Relocation.[[h|cpp]] from SKSE works fine, with one edit:
+ ```s_baseAddr = reinterpret_cast<uintptr_t>(GetModuleHandle(NULL));
+ s_baseAddr = reinterpret_cast<uintptr_t>(GetModuleHandle((char*)NULL)); //resolve ambiguity```
+
+ Relevant files:
+ nativePapyrus.cpp, nativePapyrus.h, Relocation.cpp, Relocation.h, VRExample::GameLoad()
+
+# Interface with HIGGSVR
+The HIGGS header just needs some namespace qualifiers. The interface is retrieved in plugin.cpp and the onWeaponGrab() callback is registered in VRExample.cpp
 
 ---
-
-- [SKSE "Hello, world!"](#skse-hello-world)
-- [What does it do?](#what-does-it-do)
-- [CommonLibSSE NG](#commonlibsse-ng)
-- [Requirements](#requirements)
-  - [Opening the project](#opening-the-project)
-- [Project setup](#project-setup)
-  - [Finding Your "`mods`" Folder](#finding-your-mods-folder)
-- [Setup your own repository](#setup-your-own-repository)
-- [Sharing is Caring](#sharing-is-caring)
-
-# What does it do?
-
-After running Skyrim, once at the Main Menu, press the `~` key to open the game console.
-
-You will see that we printed `"Hello, world!"` to the console at the Main Menu 🐉
-
-# CommonLibSSE NG
+# Following content copied from https://github.com/SkyrimScripting/SKSE_Template_MultipleSourceAndHeaderFiles
 
 Because this uses [CommonLibSSE NG](https://github.com/CharmedBaryon/CommonLibSSE-NG), it supports Skyrim SE, AE, GOG, and VR.
 
