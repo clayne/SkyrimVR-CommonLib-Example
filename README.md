@@ -7,6 +7,7 @@ Stuff I've figured out:
 - [Interface with HIGGSVR](#interface-with-higgsvr)
 - (Todo) Animation Event Listener
 - (Todo) Read VR controller position and button inputs
+- (Todo) Launch projectile from arbitrary location
 - (Todo) Hook into projectile update function
 - (Todo) Register custom Papyrus functions to set SKSE variables from an MCM
 
