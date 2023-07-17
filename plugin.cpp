@@ -8,29 +8,23 @@ namespace logger = SKSE::log;
 
 static SKSE::detail::SKSEMessagingInterface* g_messaging;
 static SKSE::PluginHandle g_pluginHandle = 0xFFFFFFFF;  // kPluginHandle_Invalid in PluginAPI.h
-static HiggsPluginAPI::IHiggsInterface001 *higgsInterface;
 
 // For every message sent to the plugin by SKSE, log the message.
 void MessageListener(SKSE::MessagingInterface::Message* message) {
     switch (message->type) {
-        // Descriptions are taken from the original skse64 library
-        // See:
-        // https://github.com/ianpatt/skse64/blob/09f520a2433747f33ae7d7c15b1164ca198932c3/skse64/PluginAPI.h#L193-L212
         case SKSE::MessagingInterface::kPostLoad:
             logger::info("kPostLoad: sent to registered plugins once all plugins have been loaded");
             break;
 
         case SKSE::MessagingInterface::kPostPostLoad:
             logger::info("postload: querying higgs interface");
-            higgsInterface = HiggsPluginAPI::GetHiggsInterface001(g_pluginHandle, g_messaging);
-            if (higgsInterface) {
+            VRExample::higgsInterface = HiggsPluginAPI::GetHiggsInterface001(g_pluginHandle, g_messaging);
+            if (VRExample::higgsInterface) {
                 logger::info("Got higgs interface");
-                unsigned int higgsVersion = higgsInterface->GetBuildNumber();
             }
             break;
 
         case SKSE::MessagingInterface::kPreLoadGame:
-            // message->dataLen: length of file path, data: char* file path of .ess savegame file
             logger::info("kPreLoadGame: sent immediately before savegame is read");
             break;
 
@@ -47,21 +41,22 @@ void MessageListener(SKSE::MessagingInterface::Message* message) {
             break;
 
         case SKSE::MessagingInterface::kDeleteGame:
-            // message->dataLen: length of file path, data: char* file path of .ess savegame file
             logger::info("kDeleteGame: sent right before deleting the .skse cosave and the .ess save");
             break;
 
         case SKSE::MessagingInterface::kInputLoaded:
-            logger::info("kInputLoaded: sent right after game input is loaded, right before the main menu initializes");
+            logger::info(
+                "kInputLoaded: sent right after game input is loaded, right before the main menu initializes");
             break;
 
         case SKSE::MessagingInterface::kNewGame:
-            // message-data: CharGen TESQuest pointer (Note: I haven't confirmed the usefulness of this yet!)
             logger::info("kNewGame: sent after a new game is created, before the game has loaded");
             break;
 
         case SKSE::MessagingInterface::kDataLoaded:
             logger::info("kDataLoaded: sent after the data handler has loaded all its forms");
+            /* Main entry point to our plugin here */
+            VRExample::StartMod();
             break;
 
         default:
@@ -93,8 +88,6 @@ SKSEPluginLoad(const SKSE::LoadInterface* skse) {
     SKSE::GetMessagingInterface()->RegisterListener(MessageListener);
     g_pluginHandle = skse->GetPluginHandle();
     g_messaging = (SKSE::detail::SKSEMessagingInterface*)skse->QueryInterface(SKSE::LoadInterface::kMessaging);
-
-    /* Main entry point for the plugin*/
 
     return true;  //
 }

@@ -3,7 +3,8 @@
 
 namespace VRExample {
     extern HiggsPluginAPI::IHiggsInterface001* higgsInterface;
-
+    
+    void onWeaponGrab();
+        
     void StartMod();
-
 }  // namespace VRExample
