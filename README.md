@@ -5,7 +5,7 @@ Stuff I've figured out:
 ---
 - [Call Native Papyrus functions](#call-native-papyrus-functions)
 - [Interface with HIGGSVR](#interface-with-higgsvr)
-- (Todo) Animation Event Listener
+- Animation Event Listener
 - (Todo) Read VR controller position and button inputs
 - (Todo) Launch projectile from arbitrary location
 - (Todo) Hook into projectile update function
