@@ -1,3 +1,4 @@
+// copied from SKSE64_common at https://skse.silverlock.org/
 #pragma once
 
 class RelocationManager

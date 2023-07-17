@@ -1,3 +1,4 @@
+// copied from SKSE64_common at https://skse.silverlock.org/
 #include "Relocation.h"
 
 #pragma warning(disable: 4073)	// yes this is intentional
