@@ -3,7 +3,7 @@
 cmake_minimum_required(VERSION 3.21)
 
 # Set your project name. This will be the name of your SKSE .dll file.
-project(HelloWorld VERSION 0.0.1 LANGUAGES CXX)
+project(CommonLibVR-Example VERSION 0.0.1 LANGUAGES CXX)
 
 # #
 # YOU DO NOT NEED TO EDIT ANYTHING BELOW HERE
@@ -30,8 +30,16 @@ endif()
 # Otherwise, you can set OUTPUT_FOLDER to any place you'd like :)
 # set(OUTPUT_FOLDER "C:/path/to/any/folder")
 
-# Setup your SKSE plugin as an SKSE plugin!
+# Get the .cpp files from your src/ directory
+# to be passed into add_commonlibsse_plugin
+#
+# This helper automatically finds all of your .cpp files for you
+#
+# Please note: the official recommendation is to list our every .cpp
+# file individually after SOURCES
 file(GLOB_RECURSE source_files src/*.cpp)
+
+# Setup your SKSE plugin as an SKSE plugin!
 find_package(CommonLibSSE CONFIG REQUIRED)
 add_commonlibsse_plugin(${PROJECT_NAME} SOURCES ${source_files} plugin.cpp)
 target_compile_features(${PROJECT_NAME} PRIVATE cxx_std_23) # <--- use C++23 standard
