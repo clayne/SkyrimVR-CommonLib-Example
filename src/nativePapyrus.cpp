@@ -3,10 +3,10 @@
 namespace Papyrus
 {
     // AddItem
-    typedef void (*_AddItem)(BSTSmartPointer<BSScript::IVirtualMachine> registry, uint32_t stackId, TESObjectREFR *akSource, TESForm *akItemToAdd, int aiCount, bool abSilent);
+    typedef void (*_AddItem)(RE::BSTSmartPointer<RE::BSScript::IVirtualMachine> registry, uint32_t stackId, RE::TESObjectREFR *akSource, RE::TESForm *akItemToAdd, int aiCount, bool abSilent);
     RelocAddr<_AddItem> AddItem(0x009CDC20);
 
-    taskAddItem::taskAddItem(TESObjectREFR *akSource, TESForm *akItemToAdd, int count)
+    taskAddItem::taskAddItem(RE::TESObjectREFR *akSource, RE::TESForm *akItemToAdd, int count)
     {
         m_akSource = akSource;
         m_akItemToAdd = akItemToAdd;

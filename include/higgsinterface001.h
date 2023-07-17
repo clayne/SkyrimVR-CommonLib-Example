@@ -1,18 +1,19 @@
 #pragma once
 
-#include "SKSE/Impl/Stubs.h"
+//#include "SKSE/Impl/Stubs.h"
 #include "SKSE/Interfaces.h"
 
-using namespace RE;
-
-namespace HiggsPluginAPI {
+namespace HiggsPluginAPI
+{
+    using RE::TESObjectREFR, RE::TESForm, RE::NiObject, RE::NiTransform;
 
     struct IHiggsInterface001;
     IHiggsInterface001 *GetHiggsInterface001(const SKSE::PluginHandle &pluginHandle,
                                              SKSE::detail::SKSEMessagingInterface *messagingInterface);
 
     // This object provides access to HIGGS's mod support API
-    struct IHiggsInterface001 {
+    struct IHiggsInterface001
+    {
         // Gets the HIGGS build number
         virtual unsigned int GetBuildNumber() = 0;
 
@@ -78,10 +79,11 @@ namespace HiggsPluginAPI {
         // disabled through the api.
         virtual bool CanGrabObject(bool isLeft) = 0;
 
-        enum class CollisionFilterComparisonResult : uint8_t {
-            Continue,  // Do not affect whether the two objects should collide
-            Collide,   // Force the two objects to collide
-            Ignore,    // Force the two objects to not collide
+        enum class CollisionFilterComparisonResult : uint8_t
+        {
+            Continue, // Do not affect whether the two objects should collide
+            Collide,  // Force the two objects to collide
+            Ignore,   // Force the two objects to not collide
         };
         // Add a callback for when havok compares collision filter info to determine if two objects should collide. This
         // can be called hundreds of times per frame, so be brief. collisionFilter is really of type bhkCollisionFilter

@@ -25,8 +25,8 @@ namespace VRExample {
     void GameLoad() {
         // add cabbage to player inventory
         g_player = RE::PlayerCharacter::GetSingleton();
-        TESForm* cabbageForm = TESForm::LookupByID(0x00064b3f);
+        RE::TESForm* cabbageForm = RE::TESForm::LookupByID(0x00064b3f);
 
-        g_task->AddTask(new Papyrus::taskAddItem((TESObjectREFR*)g_player, cabbageForm, 1));
+        g_task->AddTask(new Papyrus::taskAddItem((RE::TESObjectREFR*)g_player, cabbageForm, 1));
     }
 }  // namespace VRExample
