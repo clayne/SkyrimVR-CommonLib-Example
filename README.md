@@ -1,5 +1,3 @@
-# SKSE "Hello, world!"
-
 This is just a sandbox plugin for me to learn how to do things the [CommonLibSSE NG](https://github.com/CharmedBaryon/CommonLibSSE-NG) way. It's based on [this excellent template by mrowrpurr](https://github.com/SkyrimScripting/SKSE_Template_MultipleSourceAndHeaderFiles).
 I don't know if this plugin will run on non-VR versions due to the HIGGS and OpenVR dependencies.
 
