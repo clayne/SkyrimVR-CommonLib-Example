@@ -2,6 +2,7 @@
 #include "SKSE/Impl/Stubs.h"
 #include "higgsinterface001.h"
 #include "nativePapyrus.h"
+#include "animEvents.h"
 
 namespace VRExample {
     extern RE::PlayerCharacter* g_player;
