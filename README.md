@@ -8,7 +8,6 @@ This is just a sandbox plugin for me to learn how to do things the [CommonLibSSE
 
 I don't know if this plugin will run on non-VR versions due to the HIGGS and OpenVR dependencies.
 
-Stuff I've figured out:
 ---
 - [Call Native Papyrus functions](#call-native-papyrus-functions)
 - [Interface with HIGGSVR](#interface-with-higgsvr)
@@ -29,10 +28,12 @@ See: `nativePapyrus.cpp, nativePapyrus.h, Relocation.cpp, Relocation.h, VRExampl
 
 ## Interface with HIGGSVR
 The HIGGS header just needs some namespace qualifiers. The interface is retrieved in plugin.cpp and the onWeaponGrab() callback is registered in VRExample.cpp.
+
 This example will log the left hand's finger curl values when the player grabs a weapon with two hands.
 
 ## Animation Event Listener
-Uses the same method as [anim-event-logger](https://github.com/hsoju/anim-event-logger/tree/main) but simplified to only listen to the Player's animation events. Uses REL::Relocation to overwrite the Player's ProcessEvent() member function.
+The `GetOrCreateEventSink(Actor *a_actor)` function creates new AnimationEventSink objects and keeps tracks of which actors we've attached event sinks to. It uses Actor::AddAnimationGraphEventSink() to register the event sink, which runs the ProcessEvent() callback. Each Actor has their own instance of ProcessEvent() but there is only one definition. An alternate implementation which uses hooks to overwrite the Player's ProcessEvent() member can be found in [this branch](https://github.com/aspck/SkyrimVR-CommonLib-Example/tree/OldAnimEvent-HookMethod).
+
 This example will print every animation event the player receives.
 
 See: `animEvents.h, animEvents.cpp`
