@@ -4,7 +4,7 @@
 #include "SKSE/Impl/Stubs.h"
 #include "VRExample.h"
 #include "higgsinterface001.h"
-#include "animEvents.h"
+
 
 void MessageListener(SKSE::MessagingInterface::Message *message);
 void SetupLog();
@@ -57,7 +57,7 @@ void MessageListener(SKSE::MessagingInterface::Message *message)
         info("kDataLoaded: sent after the data handler has loaded all its forms");
         // Initialize our mod.
         VRExample::StartMod();
-        InitializeHooks();
+
         break;
 
     case SKSE::MessagingInterface::kPreLoadGame:
@@ -103,13 +103,4 @@ void SetupLog()
     spdlog::set_default_logger(std::move(loggerPtr));
     spdlog::set_level(spdlog::level::trace);
     spdlog::flush_on(spdlog::level::info);
-}
-
-void InitializeHooks()
-{
-    SKSE::log::trace("Initializing trampoline...");
-    auto &trampoline = SKSE::GetTrampoline();
-    trampoline.create(8);
-    SKSE::log::trace("Trampoline initialized.");
-    AnimEvents::HookProcessEvent();
 }
