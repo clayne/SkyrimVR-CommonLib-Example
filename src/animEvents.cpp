@@ -12,7 +12,7 @@ RE::BSEventNotifyControl AnimEvents::ProcessEvent(RE::BSTEventSink<RE::BSAnimati
 {
     if (a_event.holder != NULL)
     {
-        SKSE::log::info("event name: {}", a_event.tag);
+        SKSE::log::info("event name: {}", a_event.tag.c_str());
         if (a_event.tag == "JumpUp")
         {
             SKSE::log::info("Reacting to JumpUp event");
