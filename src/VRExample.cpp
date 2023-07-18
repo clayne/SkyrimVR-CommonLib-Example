@@ -33,6 +33,5 @@ namespace VRExample
         RE::TESForm *cabbageForm = RE::TESForm::LookupByID(0x00064b3f);
 
         g_task->AddTask(new Papyrus::taskAddItem((RE::TESObjectREFR *)g_player, cabbageForm, 1));
-        AnimEvents::AddEventSink();
     }
 } // namespace VRExample
