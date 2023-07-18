@@ -34,7 +34,7 @@ This example will log the left hand's finger curl values when the player grabs a
 ## Animation Event Listener
 The `GetOrCreateEventSink(Actor *a_actor)` function creates new AnimationEventSink objects and keeps tracks of which actors we've attached event sinks to. It uses Actor::AddAnimationGraphEventSink() to register the event sink, which runs the ProcessEvent() callback. Each Actor has their own instance of ProcessEvent() but there is only one definition. An alternate implementation which uses hooks to overwrite the Player's ProcessEvent() member can be found in [this branch](https://github.com/aspck/SkyrimVR-CommonLib-Example/tree/OldAnimEvent-HookMethod).
 
-This example will print every animation event the player receives.
+This example will log a debug message when the player jumps.
 
 See: `animEvents.h, animEvents.cpp`
 
