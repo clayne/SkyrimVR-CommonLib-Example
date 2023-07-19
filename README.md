@@ -34,16 +34,19 @@ This example will log the left hand's finger curl values when the player grabs a
 ## Event Listeners
 custemEventSink.h provides a template for an event listener that can have callbacks added or removed at runtime. The best explanation is an example:
 
-```void onButtonPress(RE::InputEvent *const *eventPtr){
+```
+void onButtonPress(RE::InputEvent *const *eventPtr){
     // do stuff
 }
 
 auto inputSink = EventSink<RE::InputEvent *>::GetSingleton();
 inputSink->AddCallback(onButtonPress);
-RE::BSInputDeviceManager::GetSingleton()->AddEventSink(inputSink);```
+RE::BSInputDeviceManager::GetSingleton()->AddEventSink(inputSink);
+```
 
-BSInputDeviceManager is an example of a BSTEventSource. There's over 100 BSTEventSources in CommonLibSSE and they should all work with this template.
+BSInputDeviceManager is an example of a BSTEventSource. There's over 100 BSTEventSources in CommonLibSSE and if they expose the AddEventSink() method they should work with this template.
 
 This example implements isGameStopped() from [Disable Input VR](https://www.nexusmods.com/skyrimspecialedition/mods/27800) to check if the game is paused due to a menu being open.
+
 ---
 ## Original project template description and instructions at https://github.com/SkyrimScripting/SKSE_Template_MultipleSourceAndHeaderFiles
