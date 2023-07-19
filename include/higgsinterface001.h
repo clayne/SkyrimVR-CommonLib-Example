@@ -1,6 +1,5 @@
 #pragma once
 
-//#include "SKSE/Impl/Stubs.h"
 #include "SKSE/Interfaces.h"
 
 namespace HiggsPluginAPI

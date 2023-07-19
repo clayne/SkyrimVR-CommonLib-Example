@@ -2,7 +2,8 @@
 #include "SKSE/Impl/Stubs.h"
 #include "higgsinterface001.h"
 #include "nativePapyrus.h"
-#include "animEvent.h"
+#include "customEventSink.hpp"
+#include "menu_checker.h"
 
 namespace VRExample
 {
@@ -14,25 +15,12 @@ namespace VRExample
     /// kPostLoadGame do stuff once player has loaded
     void GameLoad();
 
-    /// HIGGS StartTwoHandingCallback
+    // HIGGS example
     void onWeaponGrab();
 
-    class taskLaunchProjectile : public SKSE::detail::TaskDelegate
-    {
-    public:
-        virtual void Run();
-        virtual void Dispose();
-
-        taskLaunchProjectile(RE::Actor *blameActor, const RE::NiPoint3 &a_origin, float x, float z, RE::TESForm *akAmmo, RE::TESObjectWEAP *a_weap, RE::BSPointerHandle<RE::Projectile> *handle);
-        RE::TESObjectREFR *m_akBlameActor;
-        const RE::NiPoint3 *m_origin;
-        float _x, _z;
-        RE::TESForm *m_akAmmo;
-        RE::TESObjectWEAP *m_weap;
-        RE::BSPointerHandle<RE::Projectile> *m_handle;
-        RE::Projectile::LaunchData *launchData;
-    };
-
-
+    // Custom event handlers
+    void onButtonPress(RE::InputEvent *const *eventPtr);
+    void onMenuOpenClose(const RE::MenuOpenCloseEvent *event);
+    void onAnimEvent(const RE::BSAnimationGraphEvent *event);
 
 } // namespace VRExample

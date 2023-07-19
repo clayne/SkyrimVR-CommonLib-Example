@@ -4,11 +4,10 @@
 #include "SKSE/Impl/Stubs.h"
 #include "VRExample.h"
 #include "higgsinterface001.h"
-
+#include "customEventSink.hpp"
 
 void MessageListener(SKSE::MessagingInterface::Message *message);
 void SetupLog();
-void InitializeHooks();
 
 // Interface for communicating with other SKSE plugins.
 static SKSE::detail::SKSEMessagingInterface *g_messaging;
@@ -42,6 +41,7 @@ void MessageListener(SKSE::MessagingInterface::Message *message)
 
     case SKSE::MessagingInterface::kPostPostLoad:
         info("kPostPostLoad: querying higgs interface");
+        // HIGGS example
         g_higgsInterface = HiggsPluginAPI::GetHiggsInterface001(g_pluginHandle, g_messaging);
         if (g_higgsInterface)
         {
@@ -55,9 +55,9 @@ void MessageListener(SKSE::MessagingInterface::Message *message)
 
     case SKSE::MessagingInterface::kDataLoaded:
         info("kDataLoaded: sent after the data handler has loaded all its forms");
+
         // Initialize our mod.
         VRExample::StartMod();
-
         break;
 
     case SKSE::MessagingInterface::kPreLoadGame:

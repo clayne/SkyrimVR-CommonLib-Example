@@ -31,12 +31,19 @@ The HIGGS header just needs some namespace qualifiers. The interface is retrieve
 
 This example will log the left hand's finger curl values when the player grabs a weapon with two hands.
 
-## Animation Event Listener
-The `GetOrCreateEventSink(Actor *a_actor)` function creates new AnimationEventSink objects and keeps tracks of which actors we've attached event sinks to. It uses Actor::AddAnimationGraphEventSink() to register the event sink, which runs the ProcessEvent() callback. Each Actor has their own instance of ProcessEvent() but there is only one definition. An alternate implementation which uses hooks to overwrite the Player's ProcessEvent() member can be found in [this branch](https://github.com/aspck/SkyrimVR-CommonLib-Example/tree/OldAnimEvent-HookMethod).
+## Event Listeners
+custemEventSink.h provides a template for an event listener that can have callbacks added or removed at runtime. The best explanation is an example:
 
-This example will log a debug message when the player jumps.
+```void onButtonPress(RE::InputEvent *const *eventPtr){
+    // do stuff
+}
 
-See: `animEvents.h, animEvents.cpp`
+auto inputSink = EventSink<RE::InputEvent *>::GetSingleton();
+inputSink->AddCallback(onButtonPress);
+RE::BSInputDeviceManager::GetSingleton()->AddEventSink(inputSink);```
 
+BSInputDeviceManager is an example of a BSTEventSource. There's over 100 BSTEventSources in CommonLibSSE and they should all work with this template.
+
+This example implements isGameStopped() from [Disable Input VR](https://www.nexusmods.com/skyrimspecialedition/mods/27800) to check if the game is paused due to a menu being open.
 ---
-## Original template description and instructions at https://github.com/SkyrimScripting/SKSE_Template_MultipleSourceAndHeaderFiles
+## Original project template description and instructions at https://github.com/SkyrimScripting/SKSE_Template_MultipleSourceAndHeaderFiles

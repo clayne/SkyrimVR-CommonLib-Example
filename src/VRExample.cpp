@@ -8,13 +8,39 @@ namespace VRExample
     void StartMod()
     {
         SKSE::log::info("StartMod entry");
+
+        // Register MenuOpenCloseEvent handler 
+        MenuChecker::begin();
+
+        // HIGGS example
         if (g_higgsInterface)
         {
             SKSE::log::info("adding HIGGS callback");
             g_higgsInterface->AddStartTwoHandingCallback(onWeaponGrab);
         }
+
+        // Input event example
+        auto inputSink = EventSink<RE::InputEvent *>::GetSingleton();
+        inputSink->AddCallback(onButtonPress);
+        RE::BSInputDeviceManager::GetSingleton()->AddEventSink(inputSink);
+
+        // Animation event example
+        auto animSink = EventSink<RE::BSAnimationGraphEvent>::GetSingleton();
+        animSink->AddCallback(onAnimEvent);
+        // adding multiple AnimationGraphEventSinks to the same actor will CTD, should have logic here to prevent that
+        RE::PlayerCharacter::GetSingleton()->AddAnimationGraphEventSink(animSink);
     }
 
+    void GameLoad()
+    {
+        // add cabbage to player inventory
+        g_player = RE::PlayerCharacter::GetSingleton();
+
+        RE::TESForm *cabbageForm = RE::TESForm::LookupByID(0x00064b3f);
+        g_task->AddTask(new Papyrus::taskAddItem((RE::TESObjectREFR *)g_player, cabbageForm, 1));
+    }
+
+    // HIGGS example
     void onWeaponGrab()
     {
         if (g_higgsInterface)
@@ -26,41 +52,31 @@ namespace VRExample
         }
     }
 
-    void GameLoad()
+    // Input event example
+    void onButtonPress(RE::InputEvent *const *eventPtr)
     {
-        // add cabbage to player inventory
-        g_player = RE::PlayerCharacter::GetSingleton();
+        static bool latch = false;
+        if (!eventPtr || MenuChecker::isGameStopped())
+            return;
 
-        RE::TESForm *cabbageForm = RE::TESForm::LookupByID(0x00064b3f);
-        g_task->AddTask(new Papyrus::taskAddItem((RE::TESObjectREFR *)g_player, cabbageForm, 1));
+        auto *event = *eventPtr;
+        if (!event)
+            return;
 
-        // Add animation event sink to player
-        AnimEvent::AnimationEventSink *eventSinkPlayer = AnimEvent::GetOrCreateEventSink(g_player);
+        if (event->GetEventType() == RE::INPUT_EVENT_TYPE::kButton && event->GetDevice() == RE::INPUT_DEVICES::kVRLeft)
+        {
+            auto *buttonEvent = event->AsButtonEvent();
+            if (buttonEvent)
+            {
+                latch = buttonEvent->IsDown();
+                SKSE::log::info("buttonevent {} id: {}", buttonEvent->IsDown(), buttonEvent->idCode); // latch ? "down" : "up", buttonEvent->idCode);
+            }
+        }
     }
 
-    taskLaunchProjectile::taskLaunchProjectile(RE::Actor *blameActor, const RE::NiPoint3 &a_origin, float x, float z, RE::TESForm *akAmmo, RE::TESObjectWEAP *a_weap, RE::BSPointerHandle<RE::Projectile> *handle)
+    // Animation event example
+    void onAnimEvent(const RE::BSAnimationGraphEvent *event)
     {
-        m_akBlameActor = (RE::TESObjectREFR *)blameActor;
-        m_akAmmo = akAmmo;
-        *m_akBlameActor;
-        m_origin = &a_origin;
-        _x = x;
-        _z = z;
-        m_akAmmo = akAmmo;
-        m_weap = a_weap;
-        m_handle = handle;
-        launchData = new RE::Projectile::LaunchData();
+        SKSE::log::info("animation event holder: {}", event->holder->GetName());
     }
-
-    void taskLaunchProjectile::Run()
-    {
-        RE::Projectile::Launch(m_handle, *launchData);
-    }
-
-    void taskLaunchProjectile::Dispose()
-    {
-
-        delete this;
-    }
-
 } // namespace VRExample
