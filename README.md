@@ -11,7 +11,7 @@ I don't know if this plugin will run on non-VR versions due to the HIGGS and Ope
 ---
 - [Call Native Papyrus functions](#call-native-papyrus-functions)
 - [Interface with HIGGSVR](#interface-with-higgsvr)
-- [Animation Event Listener](#Animation-Event-Listener)
+- [Event Listeners](#Event-Listeners)
 - (Todo) Read VR controller position and button inputs
 - Launch projectile from arbitrary location
 - (Todo) Hook into projectile update function
